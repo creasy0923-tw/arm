@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>達文西手術系統互動探索指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hover-card {
+            transition: all 0.3s ease;
+        }
+        .hover-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        .bg-pattern {
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+<!-- Chosen Palette: Warm Neutrals with Teal/Blue Accents (bg-stone-50, text-slate-800, accent teal-600/blue-600) -->
+<!-- Application Structure Plan: The SPA uses a tabbed dashboard structure (Technology, Benefits, Future). This prevents information overload and allows users to explore specific aspects of the Da Vinci system sequentially or based on their interest. The structure moves logically from 'What is it?' to 'Why use it?' and finally 'What's next?', maximizing comprehension of the report's hierarchical data. -->
+<!-- Visualization & Content Choices: 1. Core Tech -> Interactive Cards -> Goal: Inform -> Justification: Breaks down technical specs into digestible chunks. 2. Benefits -> Chart.js Radar Chart -> Goal: Compare -> Justification: Translates qualitative benefits (stability, recovery) into a comparative visual (Traditional vs. Da Vinci) for immediate impact. 3. Future Apps -> Grid Layout -> Goal: Organize -> Justification: Showcases the breadth of potential applications across different industries clearly. Library: Chart.js for data. No SVG/Mermaid used. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <header class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-teal-700 tracking-tight">達文西手術系統 <span class="text-xl text-slate-500 font-normal ml-2">Da Vinci Surgical System</span></h1>
+                    <p class="mt-2 text-sm text-slate-500 font-medium">醫療科技發展互動探索指南</p>
+                </div>
+                <div class="hidden md:flex items-center justify-center w-12 h-12 bg-teal-50 text-teal-600 rounded-full text-2xl shadow-inner">
+                    🏥
+                </div>
+            </div>
+        </div>
+        <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-2">
+            <div class="flex space-x-1 sm:space-x-4 border-b border-slate-200" id="tabs">
+                <button data-target="tech-section" class="tab-btn active py-3 px-4 text-sm font-medium border-b-2 border-teal-600 text-teal-700 hover:text-teal-800 transition-colors">
+                    ⚙️ 核心技術與原理
+                </button>
+                <button data-target="benefits-section" class="tab-btn py-3 px-4 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 transition-colors">
+                    ⚖️ 雙贏效益評估
+                </button>
+                <button data-target="future-section" class="tab-btn py-3 px-4 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 transition-colors">
+                    🚀 未來應用想像
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <section id="tech-section" class="tab-content active">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4">重新定義外科手術的精準度</h2>
+                <p class="text-lg text-slate-600 leading-relaxed bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    本區塊旨在解析達文西機械手臂的底層運作邏輯與關鍵技術。達文西手臂並非自主機器人，而是一套<strong>透過電腦精密控制的輔助系統</strong>。它透過傳感器精確捕捉並感應醫師的手臂肌肉活動，進而在患者體內完美模擬出相應的動作。以下拆解其三大核心技術支柱。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover-card flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center text-3xl mb-4">
+                        💻
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">精密電腦控制系統</h3>
+                    <p class="text-slate-600">
+                        系統核心大腦。透過高度靈敏的傳感器，即時感應操作台前醫師的手臂肌肉活動，消除人為誤差，並將動作無縫轉譯為機械手臂的精密操作。
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover-card flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-teal-50 text-teal-500 rounded-full flex items-center justify-center text-3xl mb-4">
+                        🦾
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">內視鏡手腕設計</h3>
+                    <p class="text-slate-600">
+                        配備專利的多關節機械手腕，具備極高的靈活度。其旋轉與彎曲的幅度<strong>超越了人類手腕的物理極限</strong>，能在狹小體腔內執行複雜且精細的縫合與切割。
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover-card flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-indigo-50 text-indigo-500 rounded-full flex items-center justify-center text-3xl mb-4">
+                        👁️
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">3D立體與放大視覺</h3>
+                    <p class="text-slate-600">
+                        突破傳統內視鏡的平面限制，提供高畫質的 <strong>3D 立體視覺</strong>效果，並將手術視野<strong>放大 10 倍</strong>，讓醫師擁有絕佳的深度感知與極致的微觀視野。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="benefits-section" class="tab-content">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4">創造醫病雙贏的手術新紀元</h2>
+                <p class="text-lg text-slate-600 leading-relaxed bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    本區塊透過視覺化圖表與對比資訊，展示達文西系統如何同時為「執行手術的醫師」與「接受手術的患者」帶來革命性的效益。左側雷達圖將報告中的質性描述轉化為量化指標，清晰呈現其相較於傳統手術在穩定度、靈活度及復原速度等維度的全面提升；右側則詳細列出醫患雙方的具體優勢。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 bg-pattern">
+                    <h3 class="text-lg font-bold text-center text-slate-700 mb-4">手術效能指標對比分析</h3>
+                    <div class="chart-container">
+                        <canvas id="benefitsChart"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-slate-400 mt-4">* 指標數值為基於質性報告轉換之視覺化概念呈現</p>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-teal-50 rounded-2xl p-6 border border-teal-100 hover-card">
+                        <div class="flex items-center mb-4">
+                            <span class="text-3xl mr-3">👨‍⚕️</span>
+                            <h3 class="text-xl font-bold text-teal-800">醫師端優勢 (Surgeon Benefits)</h3>
+                        </div>
+                        <ul class="space-y-3 text-teal-900">
+                            <li class="flex items-start">
+                                <span class="mr-2">✔️</span>
+                                <div><strong>極致穩定性：</strong>系統過濾機制能有效避免醫師手術時產生的手部顫動。</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="mr-2">✔️</span>
+                                <div><strong>人體工學舒適度：</strong>醫師可坐在專屬控制台椅子上操作，大幅減輕長時間手術的體力負擔。</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="mr-2">✔️</span>
+                                <div><strong>提升專注力：</strong>舒適的環境與沉浸式的視覺，有助於醫師專注在手術本身，減少人為失誤風險。</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="mr-2">✔️</span>
+                                <div><strong>主要應用：</strong>極適合執行精密的面腔鏡手術（腹腔鏡手術）。</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-blue-50 rounded-2xl p-6 border border-blue-100 hover-card">
+                        <div class="flex items-center mb-4">
+                            <span class="text-3xl mr-3">🛌</span>
+                            <h3 class="text-xl font-bold text-blue-800">患者端效益 (Patient Benefits)</h3>
+                        </div>
+                        <ul class="space-y-3 text-blue-900">
+                            <li class="flex items-start">
+                                <span class="mr-2">✔️</span>
+                                <div><strong>提升安全性：</strong>高精度操作與防震設計，顯著減少手術過程中的潛在風險。</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="mr-2">✔️</span>
+                                <div><strong>微創傷口特性：</strong>機器手臂能透過極小的切口進行複雜手術，減少組織破壞。</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="mr-2">✔️</span>
+                                <div><strong>加速復原速度：</strong>因傷口小、失血少，大幅縮短術後恢復期，使患者能更快康復回歸正常生活。</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="future-section" class="tab-content">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4">科技動動腦：跨越界限的未來潛力</h2>
+                <p class="text-lg text-slate-600 leading-relaxed bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    達文西手臂不僅局限於現有的腹腔鏡手術，其「遠端控制」、「極致精準」與「微觀視覺」三大特性，為未來開啟了無限想像。本區塊探討其技術延伸至其他前沿醫療領域，甚至跨足非醫療領域（如航太、深海、精密工業等）的發展可能性，展示科技跨界應用的巨大潛能。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <div>
+                    <div class="flex items-center mb-6 pb-2 border-b-2 border-teal-200">
+                        <span class="text-2xl mr-2">🏥</span>
+                        <h3 class="text-xl font-bold text-teal-800">進階醫療領域</h3>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover-card border-l-4 border-l-teal-500">
+                            <h4 class="font-bold text-slate-800 mb-2 flex items-center"><span class="text-lg mr-2">🌐</span>遠距手術</h4>
+                            <p class="text-sm text-slate-600">結合 5G 與低延遲網路，頂尖外科醫師可跨越地理限制，為遠端或偏鄉患者即時執刀。</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover-card border-l-4 border-l-teal-500">
+                            <h4 class="font-bold text-slate-800 mb-2 flex items-center"><span class="text-lg mr-2">🔬</span>顯微外科</h4>
+                            <p class="text-sm text-slate-600">利用系統的除震與 10 倍放大功能，應用於神經、血管等極度精密的顯微級接合手術。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex items-center mb-6 pb-2 border-b-2 border-indigo-200">
+                        <span class="text-2xl mr-2">🌍</span>
+                        <h3 class="text-xl font-bold text-indigo-800">非醫療跨界應用潛力</h3>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover-card border-l-4 border-l-indigo-500">
+                            <h4 class="font-bold text-slate-800 mb-2 flex items-center"><span class="text-lg mr-2">⚙️</span>精密工業</h4>
+                            <p class="text-sm text-slate-600">取代人力進行微型電子零件、半導體精密封裝等需要極高穩定度與微觀視角的組裝作業。</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover-card border-l-4 border-l-indigo-500">
+                            <h4 class="font-bold text-slate-800 mb-2 flex items-center"><span class="text-lg mr-2">🚀</span>航太科技</h4>
+                            <p class="text-sm text-slate-600">安裝於太空站外，讓太空人能在艙內安全環境下，透過機械手臂執行危險的遠距維修任務。</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover-card border-l-4 border-l-indigo-500">
+                            <h4 class="font-bold text-slate-800 mb-2 flex items-center"><span class="text-lg mr-2">🌊</span>深海探索</h4>
+                            <p class="text-sm text-slate-600">搭載於無人潛水艇，在高壓極端環境下執行精細的樣本採集或海底纜線焊接作業。</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover-card border-l-4 border-l-indigo-500">
+                            <h4 class="font-bold text-slate-800 mb-2 flex items-center"><span class="text-lg mr-2">🏺</span>文化修復</h4>
+                            <p class="text-sm text-slate-600">應用於極其脆弱、精密的古物或藝術品修補，避免人手直接接觸造成的二次損害或顫抖失誤。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-slate-400 py-6 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>資料來源：達文西手臂 (Da Vinci Surgical System) 心智圖 | 醫療科技發展分析</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            let chartInstance = null;
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => {
+                        b.classList.remove('active', 'border-teal-600', 'text-teal-700');
+                        b.classList.add('border-transparent', 'text-slate-500');
+                    });
+                    
+                    btn.classList.add('active', 'border-teal-600', 'text-teal-700');
+                    btn.classList.remove('border-transparent', 'text-slate-500');
+
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    const targetId = btn.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+
+                    if (targetId === 'benefits-section') {
+                        initChart();
+                    }
+                });
+            });
+
+            function initChart() {
+                if (chartInstance) return; 
+
+                const ctx = document.getElementById('benefitsChart').getContext('2d');
+                
+                const data = {
+                    labels: [
+                        '手部穩定度 (防震)',
+                        '關節靈活度 (超越人體)',
+                        '視覺清晰度 (3D/放大)',
+                        '醫師舒適度 (坐姿)',
+                        '患者復原速度 (微創)'
+                    ],
+                    datasets: [{
+                        label: '達文西手術系統',
+                        data: [10, 10, 10, 9, 9],
+                        fill: true,
+                        backgroundColor: 'rgba(13, 148, 136, 0.2)',
+                        borderColor: 'rgb(13, 148, 136)',
+                        pointBackgroundColor: 'rgb(13, 148, 136)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(13, 148, 136)',
+                        borderWidth: 2
+                    }, {
+                        label: '傳統外科手術',
+                        data: [5, 4, 3, 4, 5],
+                        fill: true,
+                        backgroundColor: 'rgba(100, 116, 139, 0.2)',
+                        borderColor: 'rgb(100, 116, 139)',
+                        pointBackgroundColor: 'rgb(100, 116, 139)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(100, 116, 139)',
+                        borderWidth: 2,
+                        borderDash: [5, 5]
+                    }]
+                };
+
+                const config = {
+                    type: 'radar',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                angleLines: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                },
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                },
+                                pointLabels: {
+                                    font: {
+                                        family: "'Noto Sans TC', sans-serif",
+                                        size: 12,
+                                        weight: '500'
+                                    },
+                                    color: '#475569'
+                                },
+                                ticks: {
+                                    display: false,
+                                    min: 0,
+                                    max: 10
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: {
+                                        family: "'Noto Sans TC', sans-serif",
+                                        size: 14
+                                    },
+                                    padding: 20
+                                }
+                            },
+                            tooltip: {
+                                titleFont: {
+                                    family: "'Noto Sans TC', sans-serif"
+                                },
+                                bodyFont: {
+                                    family: "'Noto Sans TC', sans-serif"
+                                },
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.r !== null) {
+                                            if(context.parsed.r > 8) label += '極高表現';
+                                            else if(context.parsed.r > 5) label += '中高表現';
+                                            else label += '基礎表現';
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+
+                chartInstance = new Chart(ctx, config);
+            }
+        });
+    </script>
+</body>
+</html>
